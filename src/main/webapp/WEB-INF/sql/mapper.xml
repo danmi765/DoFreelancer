@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapper.java namespace -->
+<mapper namespace="freelancer" >
+
+	<resultMap type="freelancerVO" id="freelancerVO">
+		<result property="fl_no" column="fl_no" />
+		<result property="fl_name" column="fl_name" />
+		<result property="fl_gender" column="fl_gender" />
+		<result property="fl_email" column="fl_email" />
+		<result property="fl_phone" column="fl_phone" />
+		<result property="fl_phone_check" column="fl_phone_check" />
+		<result property="fl_birth" column="fl_birth" />
+		<result property="fl_graduate_day" column="fl_graduate_day" />
+		<result property="fl_consult_day" column="fl_consult_day" />
+		<result property="fl_send_day" column="fl_send_day" />
+		<result property="fl_send_day_check" column="fl_send_day_check" />
+		<result property="fl_notebook" column="fl_notebook" />
+		<result property="fl_kind" column="fl_kind" />
+		
+		<result property="school_code" column="school_code" />
+		<result property="school_name" column="school_name" />
+		
+		<result property="job_code" column="job_code" />
+		<result property="job_name" column="job_name" />
+		
+		<result property="area_code" column="area_code" />
+		<result property="area_name" column="area_name" />
+		
+		<result property="favorite_code" column="favorite_code" />
+		<result property="favorite_name" column="favorite_name" />
+		
+		<result property="able_area_code" column="able_area_code" />
+		<result property="able_area_name" column="able_area_name" />
+		
+		<result property="certi_code" column="certi_code" />
+		<result property="certi_name" column="certi_name" />
+		
+		<result property="role_code" column="role_code" />
+		<result property="role_name" column="role_name" />
+		
+		<result property="own_skill_code" column="own_skill_code" />
+		<result property="own_skill_name" column="own_skill_name" />
+		
+		<result property="handicap_code" column="handicap_code" />
+		<result property="handicap_name" column="handicap_name" />
+		
+		<result property="datail" column="datail" />
+		<result property="notice" column="notice" />
+		
+		<result property="carreer" column="carreer" />
+		<result property="checked_day" column="checked_day" />
+		
+		<result property="d_min" column="d_min" />
+		<result property="d_max" column="d_max" />
+		<result property="d_fixed" column="d_fixed" />
+		<result property="d_nego" column="d_nego" />
+		
+		<result property="o_min" column="o_min" />
+		<result property="o_max" column="o_max" />
+		<result property="o_fixed" column="o_fixed" />
+		<result property="o_nego" column="o_nego" />
+		
+		<result property="totcount" column="totcount" />
+		<result property="num" column="num" />
+	</resultMap>
+	
+	<!-- 목록리스트 가져오기 -->
+	<select id="get_school_list" resultMap="freelancerVO" > 
+		select * from code_school order by school_code 
+	</select>
+	
+	<select id="get_handicap_list" resultMap="freelancerVO" > 
+		select * from code_handicap order by handicap_code
+	</select>
+	
+	<select id="get_job_list" resultMap="freelancerVO" > 
+		select * from code_job order by job_code 
+	</select>
+	
+	<select id="get_own_skill_list" resultMap="freelancerVO" > 
+		select * from code_own_skill order by own_skill_code 
+	</select>
+	
+	<select id="get_role_list" resultMap="freelancerVO" > 
+		select * from code_role order by role_code 
+	</select>
+	
+	<select id="get_certi_list" resultMap="freelancerVO" > 
+		select * from code_certi order by certi_code 
+	</select>
+	
+	<select id="get_able_area_list" resultMap="freelancerVO" > 
+		select * from code_able_area order by able_area_code 
+	</select>
+	
+	<select id="get_favorite_list" resultMap="freelancerVO" > 
+		select * from code_favorite order by favorite_code 
+	</select>
+	
+	<select id="get_area_list" resultMap="freelancerVO" > 
+		select * from code_area order by area_code 
+	</select>
+	
+	
+	
+	<insert id="insertFreelancer"  parameterType="com.digitalone.freelancer.dto.FreelancerVO">
+		insert into freelancer 
+			values(freelancer_seq.nextval, #{fl_name}, #{fl_gender}, #{fl_email}, #{fl_phone}, #{fl_phone_check}, #{fl_birth},
+					${school_code}, #{fl_graduate_day}, #{fl_consult_day}, ${job_code}, #{fl_send_day}, #{fl_send_day_check},
+					#{fl_notebook}, ${area_code}, #{fl_kind})
+	</insert>
+	
+	<insert id="insertFlCarreer"  parameterType="com.digitalone.freelancer.dto.FreelancerVO">
+		insert into fl_carreer values(fl_carreer_seq.nextval, ${fl_no}, #{carreer},#{checked_day})
+	</insert>
+	
+	<insert id="insertFlOwnskill"  parameterType="com.digitalone.freelancer.dto.FreelancerVO">
+		insert into FL_OWN_SKILL_CODE values(fl_own_skill_code_seq.nextval,${fl_no},${own_skill_code})
+	</insert>
+	
+	<insert id="insertFlRole"  parameterType="com.digitalone.freelancer.dto.FreelancerVO">
+		insert into FL_ROLE_CODE values(FL_ROLE_CODE_seq.nextval, ${fl_no},${role_code})
+	</insert>
+
+	<insert id="insertFlDevelopPrice"  parameterType="com.digitalone.freelancer.dto.FreelancerVO">
+		insert into DEVELOP_PRICE values(DEVELOP_PRICE_seq.nextval, ${fl_no}, #{d_min_price},#{d_max_price},#{d_fixed},#{d_nego})
+	</insert>
+	
+	<insert id="insertFlOpPrice"  parameterType="com.digitalone.freelancer.dto.FreelancerVO">
+		insert into OP_PRICE values(OP_PRICE_seq.nextval, ${fl_no}, #{o_min_price},#{o_max_price},#{o_fixed},#{o_nego})
+	</insert>
+	
+	<insert id="insertFlAbleArea"  parameterType="com.digitalone.freelancer.dto.FreelancerVO">
+		insert into FL_ABLE_AREA_CODE values(FL_ABLE_AREA_CODE_seq.nextval,${fl_no}, ${able_area_code})
+	</insert>
+	
+	<insert id="insertFlFavorite"  parameterType="com.digitalone.freelancer.dto.FreelancerVO">
+		insert into FL_FAVORITE_CODE values(FL_FAVORITE_CODE_seq.nextval, ${fl_no} ,${favorite_code})
+	</insert>
+					
+	<insert id="insertFlNoti"  parameterType="com.digitalone.freelancer.dto.FreelancerVO">
+		insert into FL_NOTI values(FL_NOTI_seq.nextval, ${fl_no},#{detail},#{notice})
+	</insert>
+
+	<insert id="insertFlCerti"  parameterType="com.digitalone.freelancer.dto.FreelancerVO">
+		insert into FL_CERTI_CODE values(FL_CERTI_CODE_seq.nextval, ${fl_no}, ${certi_code})
+	</insert>
+	
+	<insert id="insertFlHandicap" parameterType="com.digitalone.freelancer.dto.FreelancerVO">
+		insert into fl_handicap_code values(fl_handicap_code_seq.nextval,${fl_no},${handicap_code})
+	</insert>
+
+	<select id="getFl_noByEmail" resultMap="freelancerVO"  parameterType="com.digitalone.freelancer.dto.FreelancerVO">
+	 	select fl_no from freelancer where fl_email = #{fl_email}
+	</select>
+	
+	
+	
+	<select id="getHandicapInfoBtFl_no" resultMap="freelancerVO"  parameterType="com.digitalone.freelancer.dto.FreelancerVO">
+		select fl_kind from freelancer where fl_no = ${fl_no}
+	</select>
+		
+	<select id="getFreelancerByFl_no" resultMap="freelancerVO"  parameterType="com.digitalone.freelancer.dto.FreelancerVO">
+		select f.*, dp.d_min_price, dp.d_max_price, dp.d_fixed, dp.d_nego ,op.o_min_price, op.o_max_price, op.o_fixed, op.o_nego , fv.favorite_code,
+				cc.certi_code, r.role_code, os.own_skill_code, fn.notice , fn.detail , fca.carreer , fca.checked_day , aa.able_area_code 
+				<if test="fl_kind !=null ">,hc.handicap_code</if>
+
+			from freelancer f, develop_price dp, op_price op, fl_noti fn, fl_carreer fca,
+				(select fl_no, substr(xmlagg ( xmlelement(X,',',favorite_code) order by favorite_code).extract ('//text()'),2  ) as favorite_code 
+					from fl_favorite_code group by fl_no) fv,
+				(select fl_no, substr(xmlagg ( xmlelement(X,',',certi_code) order by certi_code).extract ('//text()'),2  ) as certi_code 
+					from fl_certi_code group by fl_no) cc,
+				(select fl_no, substr(xmlagg ( xmlelement(X,',',role_code) order by role_code).extract ('//text()'),2  ) as role_code 
+					from fl_role_code group by fl_no) r	,
+				(select fl_no, substr(xmlagg ( xmlelement(X,',',own_skill_code) order by own_skill_code).extract ('//text()'),2  ) as own_skill_code 
+					from fl_own_skill_code group by fl_no) os,
+				(select fl_no, substr(xmlagg ( xmlelement(X,',',able_area_code) order by able_area_code).extract ('//text()'),2  ) as able_area_code 
+						from fl_able_area_code group by fl_no) aa 
+					
+			<if test="fl_kind !=null ">	,(select fl_no, substr(xmlagg ( xmlelement(X,',',handicap_code) order by handicap_code).extract ('//text()'),2  ) as handicap_code 
+					from fl_handicap_code group by fl_no) hc	
+			</if>
+			
+					where f.fl_no = ${fl_no}
+				
+						and f.fl_no = dp.fl_no and f.fl_no = op.fl_no and fv.fl_no = f.fl_no and cc.fl_no = f.fl_no
+						and f.fl_no = r.fl_no and f.fl_no = os.fl_no and f.fl_no = fn.fl_no and fca.fl_no = f.fl_no
+						and f.fl_no = aa.fl_no 
+						
+						<if test="fl_kind !=null ">and f.fl_no = hc.fl_no</if>
+	</select>
+	
+	<select id="getSearchList" resultMap="freelancerVO"  parameterType="com.digitalone.freelancer.dto.FreelancerVO">
+	select rownum num, s.* from				
+	(	select count(*) over() totcount, f.*, fv.favorite_code, r.role_code,r.role_name, os.own_skill_code, os.own_skill_name, fca.carreer , fv.favorite_name, sch.school_name, fca.checked_day 
+				 <if test="certi_code != null">,cc.certi_code</if>
+		
+			from freelancer f, fl_carreer fca,
+				
+				(select ffc.fl_no, substr(xmlagg ( xmlelement(X,',',ffc.favorite_code) order by ffc.favorite_code).extract ('//text()'),2  ) as favorite_code ,
+							 substr(xmlagg ( xmlelement(X,',',ccf.favorite_name) order by ccf.favorite_name).extract ('//text()'),2  ) as favorite_name 
+						from fl_favorite_code ffc, code_favorite ccf ,
+							(select distinct fl_no cfc_fl_no from fl_favorite_code 
+								<if test="favorite_code != null">where favorite_code in(${favorite_code})</if> ) cfc
+							where ffc.favorite_code = ccf.favorite_code and ffc.fl_no = cfc.cfc_fl_no
+								group by fl_no) fv,
+						
+			<if test="certi_code != null">	(select fl_no, substr(xmlagg ( xmlelement(X,',',certi_code) order by certi_code).extract ('//text()'),2  ) as certi_code 
+					from fl_certi_code group by fl_no) cc,</if>
+					
+				(select fr.fl_no, 
+				substr(xmlagg ( xmlelement(X,',',fr.role_code) order by fr.role_code).extract ('//text()'),2  ) as role_code,
+				substr(xmlagg ( xmlelement(X,',',cr.role_name) order by cr.role_name).extract ('//text()'),2  ) as role_name
+					from fl_role_code fr, code_role cr ,
+						(select distinct fl_no ff_fl_no 
+							from FL_ROLE_CODE 
+								<if test="role_code != null"> where role_code in(${role_code})</if>
+									) ff
+						where fr.fl_no = ff.ff_fl_no and fr.role_code = cr.role_code
+						group by fl_no) r	,
+						
+				(select fl_no os_fl_no, substr(xmlagg ( xmlelement(X,',',fsk.own_skill_code) order by fsk.own_skill_code).extract ('//text()'),2  ) as own_skill_code,
+						substr(xmlagg ( xmlelement(X,',',cos.own_skill_name) order by cos.own_skill_name).extract ('//text()'),2  ) as own_skill_name
+					from fl_own_skill_code fsk, code_own_skill cos ,
+						(select distinct fl_no as dd_fl_no 
+							from fl_own_skill_code 
+								<if test="own_skill_code != null">where own_skill_code in(${own_skill_code})</if>
+								) dd
+						where fsk.own_skill_code = cos.own_skill_code  and fsk.fl_no = dd.dd_fl_no 
+							group by fl_no) os,
+				
+				(select * from code_school) sch
+					
+			where f.fl_no = fca.fl_no 
+				and f.fl_no = fv.fl_no 
+				and f.fl_no=r.fl_no 
+				and f.fl_no=os.os_fl_no
+				and f.school_code = sch.school_code
+				<if test="certi_code != null">and f.fl_no=cc.fl_no </if>
+			
+			<if test="fl_no != null">and f.fl_no = ${fl_no}</if>
+			<if test="fl_kind != null">	and f.fl_kind =#{fl_kind}</if>
+			<if test="kind1 != null">and f.fl_kind in(#{kind1},#{kind2})</if>
+		 	
+		 	<if test="fl_gender != null"> and f.fl_gender=#{fl_gender}</if>
+		 	<if test="gender1 != null"> and f.fl_gender in (#{gender1},#{gender2})</if>
+		 	
+			<if test="certi_code != null">		and cc.certi_code in(${certi_code})</if>
+			<if test="school_code != null">		and f.school_code in (${school_code})</if>
+			<if test="job_code != null">		and f.job_code in(${job_code})</if>
+			<if test="fl_send_day_check != null">		and f.fl_send_day_check = #{fl_send_day_check}</if>
+			
+			<if test="s_carreer != null">		
+				and (substr(fca.carreer,0,1) <![CDATA[>=]]> #{s_carreer} 
+				<if test="e_carreer != null">
+					and substr(fca.carreer,0,1) <![CDATA[<=]]> #{e_carreer} 
+				</if>
+				)
+			</if>
+			<if test="s_carreer == null">
+				<if test="e_carreer != null">
+					and substr(fca.carreer,0,1) <![CDATA[<=]]> #{e_carreer} 
+				</if>
+			</if>
+			
+			<if test="checked_day != null">	
+				and (substr(f.fl_consult_day,0,10) <![CDATA[>=]]> #{checked_day} 
+				<if test="e_checked_day != null">
+					and substr(f.fl_consult_day,0,10) <![CDATA[<=]]> #{e_checked_day} 
+				</if>
+				)
+			</if>
+			<if test="checked_day == null">		
+				<if test="e_checked_day != null">
+					and substr(f.fl_consult_day,0,10) <![CDATA[<=]]> #{e_checked_day} 
+				</if>		
+			</if>
+			
+			<if test="fl_consult_day != null">		
+				and (substr(f.fl_consult_day,0,10) <![CDATA[>=]]> #{fl_consult_day} 
+				<if test="fl_e_consult_day != null">
+					and (substr(f.fl_consult_day,0,10) <![CDATA[<=]]> #{fl_e_consult_day}
+				</if>
+				)
+			</if>
+			<if test="fl_consult_day == null">
+				<if test="fl_e_consult_day != null">
+					and substr(f.fl_consult_day,0,10) <![CDATA[<=]]> #{fl_e_consult_day}
+				</if>
+			</if>
+			
+			<if test="fl_send_day != null">		
+				and (f.fl_send_day <![CDATA[>=]]> #{fl_send_day} 
+				<if test="fl_e_send_day != null">
+					and f.fl_send_day <![CDATA[<=]]> #{fl_e_send_day}
+				</if>
+				)
+			</if> 
+			<if test="fl_send_day == null">
+				<if test="fl_e_send_day != null">
+					and f.fl_send_day <![CDATA[<=]]> #{fl_e_send_day}
+				</if>
+			</if>
+			
+			<if test="fl_birth != null">
+				and (f.fl_birth <![CDATA[<=]]> #{fl_birth} 
+				<if test="fl_e_birth != null">		
+					and (f.fl_birth <![CDATA[>=]]> #{fl_e_birth} 
+				</if>
+				)
+			</if>
+			<if test="fl_birth == null">
+				<if test="fl_e_birth != null">		
+					and f.fl_birth <![CDATA[>=]]> #{fl_e_birth} 
+				</if>
+			</if>
+			
+			<if test="s_year != null">		
+				and (f.fl_graduate_day <![CDATA[>=]]> #{s_year} 
+				<if test="e_year != null">
+					and f.fl_graduate_day <![CDATA[<=]]> #{e_year}
+				</if>
+				)
+			</if>
+			<if test="s_year == null">
+				<if test="e_year != null">
+					and f.fl_graduate_day <![CDATA[<=]]> #{e_year}
+				</if>
+			</if>
+			
+			<if test="keyword1 != null">
+					and (
+							( f.fl_name like '%'||#{keyword1}||'%' or
+								f.fl_email like '%'||#{keyword1}||'%' or
+								f.fl_phone like '%'||#{keyword1}||'%' or
+								sch.school_name like '%'||#{keyword1}||'%' or
+								f.fl_birth like '%'||#{keyword1}||'%' or
+								f.fl_gender like '%'||#{keyword1}||'%' or
+								os.own_skill_name like '%'||#{keyword1}||'%' or
+								fv.favorite_name like '%'||#{keyword1}||'%' or
+								r.role_name like '%'||#{keyword1}||'%'
+								
+							)
+				<if test="keyword2 != null">				
+										${operators} 
+										
+							( f.fl_name like '%'||#{keyword2}||'%' or
+								f.fl_email like '%'||#{keyword2}||'%' or
+								f.fl_phone like '%'||#{keyword2}||'%' or
+								sch.school_name like '%'||#{keyword2}||'%' or
+								f.fl_birth like '%'||#{keyword2}||'%' or
+								f.fl_gender like '%'||#{keyword2}||'%' or
+								os.own_skill_name like '%'||#{keyword2}||'%' or
+								fv.favorite_name like '%'||#{keyword2}||'%' or
+								r.role_name like '%'||#{keyword2}||'%'
+							)
+				</if>
+						)
+			</if>
+			
+			<if test="orderby != null">	order by ${orderby}</if>
+		) s
+	</select>
+	
+</mapper>
